@@ -1,0 +1,1 @@
+python main.py -i test_img/<NAME>.bmp -m Z -c -a rle -o test_img/<NAME>.bin
