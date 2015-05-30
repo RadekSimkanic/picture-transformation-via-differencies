@@ -26,7 +26,7 @@ def intToHexStr(number):
 def length(number): #lengthIntegerInBinary
     #return int(len(bin(number)[2:]))
     return 0 if number == 0 else int(len(bin(number)[2:]))
-    #return 0 if number == 0 else int(math.log(number, 2))+1
+    #return 0 if number == 0 else int(math.log(number, 2))+1 # sometimes the wrong values :(
 
 def getFirstBits(number, first = 1):
     shift = length(number) - first
@@ -85,9 +85,7 @@ def resplitBinaryCodes(lst, new_size):
     previous_part = 0
     part_size = 0
     for number in lst:
-        #if previous_part:
         if part_size:
-            #size = length(previous_part) + length(number)
             size = part_size + length(number)
             if size == new_size:
                 previous_part <<= length(number)
@@ -99,18 +97,14 @@ def resplitBinaryCodes(lst, new_size):
                 previous_part <<= length(number)
                 previous_part += number
                 part_size += length(number)
-                #while length(previous_part) > new_size:
                 while part_size > new_size:
                     virtual_size = new_size - (part_size - length(previous_part))
                     if virtual_size > 0:
-                        #result.append(getFirstBits(previous_part, new_size))
-                        #previous_part = cutFirst(previous_part, new_size)
                         result.append(getFirstBits(previous_part, virtual_size))
                         previous_part = cutFirst(previous_part, virtual_size)
                     else:
                         if first:
                             first = False
-                            #print "#1 VS: %i    PS: %i     Length: %i    Data: %s"%(virtual_size, part_size, length(previous_part), bin(previous_part))
                         result.append(0)
                     part_size -= new_size
             else:
@@ -128,30 +122,22 @@ def resplitBinaryCodes(lst, new_size):
             part_size = length(number)
             continue
 
-        #if length(number) > new_size:
         previous_part = number
         part_size = length(number)
-        #while length(previous_part) > new_size:
         while part_size > new_size:
             virtual_size = new_size - (part_size - length(previous_part))
             if virtual_size > 0:
-                #result.append(getFirstBits(previous_part, new_size))
-                #previous_part = cutFirst(previous_part, new_size)
                 result.append(getFirstBits(previous_part, virtual_size))
                 previous_part = cutFirst(previous_part, virtual_size)
             else:
                 if first:
                     first = False
-                    #print "#2 VS: %i    PS: %i     Length: %i    Data: %s"%(virtual_size, part_size, length(previous_part), bin(previous_part))
                 result.append(0)
             part_size -= new_size
-
-        #if length(previous_part):
 
     # padding zeros
     if part_size:
         previous_part <<= new_size - part_size#length(previous_part)
-        #part_size += new_size - part_size
         result.append(previous_part)
 
     return result
@@ -247,47 +233,6 @@ def decodeBcd(binary, string_input = False):
         return number
 
     return int(number)
-
-
-# http://en.wikipedia.org/wiki/Levenshtein_coding
-def genLevenshtein(self, number):
-    pass
-
-def genEliasAlpha(self, number):
-    pass
-
-def genEliasBeta(self, number):
-    pass
-
-def genEliasDelta(self, number):
-    pass
-
-def genEliasOmega(self, number):
-    pass
-
-def encodeEliasGama(self, number_or_numbers, synchronization_start_bit = True, string_output = False, explode = False):
-    if isinstance(number_or_numbers, int):
-        number_or_numbers = [number_or_numbers]
-
-    number_list = []
-
-    for number in number_or_numbers:
-        pass
-
-
-def genBcd3(self, number):
-    pass
-
-def genBcd2421(self, number):
-    pass
-
-def genGray(self, number):
-    pass
-# https://cs.wikipedia.org/wiki/Zkr%C3%A1cen%C3%A9_bin%C3%A1rn%C3%AD_k%C3%B3dov%C3%A1n%C3%AD
-def genTruncated(self, number, entropy):
-    pass
-
-
 
 """
 for i in xrange(1, 255):
