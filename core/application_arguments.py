@@ -153,7 +153,14 @@ class Argument:
 
 # And example how to create own argument checker
 class ExampleArgument:
-    pass
+    values = [
+        "yes", "no", "true", "false", "0", "1"
+    ]
+    def _check(self, value):
+        if value not in self.values:
+            return (False, "%s is not applicable"%value)
+
+        return True
 
 
 class Arguments:
